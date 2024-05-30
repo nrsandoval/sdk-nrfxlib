@@ -463,6 +463,8 @@ struct nrf_wifi_fmac_dev_ctx_def {
 	unsigned char num_sta;
 	/** Number of interfaces in AP mode. */
 	unsigned char num_ap;
+	/** Number of interfaces in Monitor mode. */
+	unsigned char num_mon;
 	/** Queue for storing mapping info of RX buffers. */
 	struct nrf_wifi_fmac_buf_map_info *rx_buf_info;
 #if defined(CONFIG_NRF700X_STA_MODE)

@@ -53,6 +53,7 @@
 #define MAX_NUM_VIFS 2
 #define MAX_NUM_STAS 2
 #define MAX_NUM_APS 1
+#define MAX_NUM_MONITORS 1
 
 #define NRF_WIFI_COUNTRY_CODE_LEN 2
 

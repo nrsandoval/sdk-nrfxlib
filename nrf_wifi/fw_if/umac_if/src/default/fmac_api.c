@@ -1954,6 +1954,7 @@ unsigned char nrf_wifi_fmac_add_vif(void *dev_ctx,
 	case NRF_WIFI_IFTYPE_P2P_CLIENT:
 	case NRF_WIFI_IFTYPE_AP:
 	case NRF_WIFI_IFTYPE_P2P_GO:
+	case NRF_WIFI_IFTYPE_MONITOR:
 		break;
 	default:
 		nrf_wifi_osal_log_err(fmac_dev_ctx->fpriv->opriv,
@@ -2078,6 +2079,7 @@ enum nrf_wifi_status nrf_wifi_fmac_del_vif(void *dev_ctx,
 	case NRF_WIFI_IFTYPE_P2P_CLIENT:
 	case NRF_WIFI_IFTYPE_AP:
 	case NRF_WIFI_IFTYPE_P2P_GO:
+	case NRF_WIFI_IFTYPE_MONITOR:
 		break;
 	default:
 		nrf_wifi_osal_log_err(fmac_dev_ctx->fpriv->opriv,
