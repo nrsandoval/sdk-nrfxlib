@@ -154,6 +154,9 @@ static enum nrf_wifi_status umac_event_ctrl_process(struct nrf_wifi_fmac_dev_ctx
 	bool more_res = false;
 	struct nrf_wifi_fmac_dev_ctx_def *def_dev_ctx = NULL;
 	struct nrf_wifi_fmac_priv_def *def_priv = NULL;
+#if CONFIG_WIFI_NRF700X_LOG_LEVEL >= NRF_WIFI_LOG_LEVEL_DBG
+	struct nrf_wifi_umac_event_cmd_status *cmd_status;
+#endif
 
 	if (!fmac_dev_ctx || !event_data) {
 		nrf_wifi_osal_log_err(fmac_dev_ctx->fpriv->opriv,
@@ -457,8 +460,7 @@ static enum nrf_wifi_status umac_event_ctrl_process(struct nrf_wifi_fmac_dev_ctx
 		break;
 	case NRF_WIFI_UMAC_EVENT_CMD_STATUS:
 #if CONFIG_WIFI_NRF700X_LOG_LEVEL >= NRF_WIFI_LOG_LEVEL_DBG
-		struct nrf_wifi_umac_event_cmd_status *cmd_status =
-			(struct nrf_wifi_umac_event_cmd_status *)event_data;
+		cmd_status = (struct nrf_wifi_umac_event_cmd_status *)event_data;
 #endif
 		nrf_wifi_osal_log_dbg(fmac_dev_ctx->fpriv->opriv,
 				      "%s: Command %d -> status %d",
@@ -975,6 +977,12 @@ static enum nrf_wifi_status umac_process_sys_events(struct nrf_wifi_fmac_dev_ctx
 #else
 	struct nrf_wifi_fmac_dev_ctx_def *def_dev_ctx;
 #endif /* CONFIG_NRF700X_RADIO_TEST */
+#if defined(CONFIG_NRF700X_RAW_DATA_RX) || defined(CONFIG_NRF700X_PROMISC_DATA_RX)
+	struct nrf_wifi_event_set_channel *channel_event;
+#endif
+#if defined(CONFIG_NRF700X_RAW_DATA_RX) || defined(CONFIG_NRF700X_PROMISC_DATA_RX)
+	struct nrf_wifi_event_raw_config_filter *filter_event;
+#endif
 
 	if (!fmac_dev_ctx || !rpu_msg) {
 		return status;
@@ -1026,8 +1034,6 @@ static enum nrf_wifi_status umac_process_sys_events(struct nrf_wifi_fmac_dev_ctx
 #endif
 #if defined(CONFIG_NRF700X_RAW_DATA_TX) || defined(CONFIG_NRF700X_RAW_DATA_RX)
 	case NRF_WIFI_EVENT_CHANNEL_SET_DONE:
-		struct nrf_wifi_event_set_channel *channel_event;
-
 		channel_event = (struct nrf_wifi_event_set_channel *)sys_head;
 		if (!channel_event->status) {
 			def_dev_ctx->vif_ctx[channel_event->if_index]->channel =
@@ -1038,8 +1044,6 @@ static enum nrf_wifi_status umac_process_sys_events(struct nrf_wifi_fmac_dev_ctx
 #endif /* CONFIG_NRF700X_RAW_DATA_TX */
 #if defined(CONFIG_NRF700X_RAW_DATA_RX) || defined(CONFIG_NRF700X_PROMISC_DATA_RX)
 	case NRF_WIFI_EVENT_FILTER_SET_DONE:
-		struct nrf_wifi_event_raw_config_filter *filter_event;
-
 		filter_event = (struct nrf_wifi_event_raw_config_filter *)sys_head;
 		if (!filter_event->status) {
 			def_dev_ctx->vif_ctx[filter_event->if_index]->packet_filter =
