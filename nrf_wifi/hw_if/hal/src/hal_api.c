@@ -757,6 +757,8 @@ static enum nrf_wifi_status hal_rpu_cmd_process_queue(struct nrf_wifi_hal_dev_ct
 			continue;
 		}
 
+		nrf_wifi_osal_log_dbg(hal_dev_ctx->hpriv->opriv,
+						"%s: writing command", __func__);
 		status = hal_rpu_msg_write(hal_dev_ctx,
 					   NRF_WIFI_HAL_MSG_TYPE_CMD_CTRL,
 					   cmd->data,

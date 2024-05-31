@@ -885,6 +885,9 @@ nrf_wifi_fmac_if_mode_set_event_proc(struct nrf_wifi_fmac_dev_ctx *fmac_dev_ctx,
 	config = &def_dev_ctx->tx_config;
 	vif = def_dev_ctx->vif_ctx[if_idx];
 
+	nrf_wifi_osal_log_dbg(fmac_dev_ctx->fpriv->opriv,
+					"%s: status received %d",
+					__func__, mode_event->status);
 	if (!mode_event->status) {
 		vif->mode = mode_event->op_mode;
 #ifdef CONFIG_NRF700X_RAW_DATA_TX

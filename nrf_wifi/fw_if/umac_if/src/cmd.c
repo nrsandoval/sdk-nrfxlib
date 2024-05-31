@@ -77,9 +77,10 @@ enum nrf_wifi_status umac_cmd_cfg(struct nrf_wifi_fmac_dev_ctx *fmac_dev_ctx,
 					    (sizeof(*umac_cmd) + len));
 
 	nrf_wifi_osal_log_dbg(fmac_dev_ctx->fpriv->opriv,
-			      "%s: Command %d sent to RPU",
+			      "%s: Command %d sent to RPU stat=%d",
 			      __func__,
-			      ((struct nrf_wifi_umac_hdr *)params)->cmd_evnt);
+			      ((struct nrf_wifi_umac_hdr *)params)->cmd_evnt,
+				  status);
 
 out:
 	return status;

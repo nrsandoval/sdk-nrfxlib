@@ -2162,6 +2162,7 @@ enum nrf_wifi_status nrf_wifi_fmac_chg_vif(void *dev_ctx,
 	case NRF_WIFI_IFTYPE_P2P_CLIENT:
 	case NRF_WIFI_IFTYPE_AP:
 	case NRF_WIFI_IFTYPE_P2P_GO:
+	case NRF_WIFI_IFTYPE_MONITOR:
 		break;
 	default:
 		nrf_wifi_osal_log_err(fmac_dev_ctx->fpriv->opriv,
@@ -2196,6 +2197,9 @@ enum nrf_wifi_status nrf_wifi_fmac_chg_vif(void *dev_ctx,
 	chg_vif_cmd->valid_fields |= NRF_WIFI_SET_INTERFACE_IFTYPE_VALID;
 	chg_vif_cmd->valid_fields |= NRF_WIFI_SET_INTERFACE_USE_4ADDR_VALID;
 
+	nrf_wifi_osal_log_info(fmac_dev_ctx->fpriv->opriv,
+							"%s: sending command",
+							__func__);
 	status = umac_cmd_cfg(fmac_dev_ctx,
 			      chg_vif_cmd,
 			      sizeof(*chg_vif_cmd));
